@@ -1,0 +1,66 @@
+name: Publish Docker
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * 1' # Weekly on Monday at 10:00
+
+jobs:
+  latest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Build latest Debian version and publish to GitHub Registry
+        uses: elgohr/Publish-Docker-Github-Action@v4
+        with:
+          name: 104lab/lazy-octane
+          tags: "latest,8.1"
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          dockerfile: 8.1/Dockerfile
+
+  latest-alpine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Build latest Alpine version and publish to GitHub Registry
+        uses: elgohr/Publish-Docker-Github-Action@v4
+        with:
+          name: 104lab/lazy-octane
+          tags: "alpine,8.1-alpine"
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          dockerfile: 8.1/alpine/Dockerfile
+
+  php80:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Build PHP 8.0 + Debian version and publish to GitHub Registry
+        uses: elgohr/Publish-Docker-Github-Action@v4
+        with:
+          name: 104lab/lazy-octane
+          tags: "8.0"
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          dockerfile: 8.0/Dockerfile
+
+  php80-alpine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Build PHP 8.0 + Alpine version and publish to GitHub Registry
+        uses: elgohr/Publish-Docker-Github-Action@v4
+        with:
+          name: 104lab/lazy-octane
+          tags: "8.0-alpine"
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          dockerfile: 8.0/alpine/Dockerfile
