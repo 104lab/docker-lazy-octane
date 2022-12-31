@@ -17,11 +17,11 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@v4
         with:
           name: 104lab/lazy-octane
-          tags: "latest,8.1"
+          tags: "latest,8.2"
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-          dockerfile: 8.1/Dockerfile
+          dockerfile: 8.2/Dockerfile
 
   latest-alpine:
     runs-on: ubuntu-latest
@@ -31,36 +31,41 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@v4
         with:
           name: 104lab/lazy-octane
-          tags: "alpine,8.1-alpine"
+          tags: "alpine,8.2-alpine"
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-          dockerfile: 8.1/alpine/Dockerfile
+          dockerfile: 8.2/alpine/Dockerfile
 
-  php80:
+  cli:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ["8.1", "8.0"]
     steps:
       - uses: actions/checkout@master
-      - name: Build PHP 8.0 + Debian version and publish to GitHub Registry
-        uses: elgohr/Publish-Docker-Github-Action@v4
+      - name: Build PHP ${{ matrix.version }} CLI and publish
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: 104lab/lazy-octane
-          tags: "8.0"
+          tags: ${{ matrix.version }},${{ matrix.version }}-cli
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-          dockerfile: 8.0/Dockerfile
+          dockerfile: ${{ matrix.version }}/Dockerfile
 
-  php80-alpine:
+  alpine:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ["8.1", "8.0"]
     steps:
       - uses: actions/checkout@master
-      - name: Build PHP 8.0 + Alpine version and publish to GitHub Registry
-        uses: elgohr/Publish-Docker-Github-Action@v4
+      - name: Build PHP ${{ matrix.version }} Alpine and publish
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
-          name: 104lab/lazy-octane
-          tags: "8.0-alpine"
+          name: 104lab/lazy-octane:${{ matrix.version }}-alpine
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-          dockerfile: 8.0/alpine/Dockerfile
+          dockerfile: ${{ matrix.version }}/alpine/Dockerfile
