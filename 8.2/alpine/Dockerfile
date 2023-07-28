@@ -16,6 +16,7 @@ RUN set -xe && \
             docker-php-ext-install \
                 gmp \
                 soap \
+                sockets \
         && \
             apk add --no-cache --virtual .build-deps \
                 autoconf \

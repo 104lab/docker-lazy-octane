@@ -20,6 +20,7 @@ RUN set -xe && \
             docker-php-ext-install \
                 gmp \
                 soap \
+                sockets \
         && \
             pecl install \
                 mongodb-1.12.0 \
