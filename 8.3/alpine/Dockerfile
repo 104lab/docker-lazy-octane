@@ -6,8 +6,12 @@ LABEL org.opencontainers.image.source="https://github.com/104lab/docker-octane" 
 # Set build deps
 ENV BUILD_DEPS \
         gmp-dev \
-        libxml2-dev
+        libxml2-dev \
+        linux-headers
 
+# Socket issue
+# https://github.com/php/php-src/issues/8681
+# https://github.com/docker-library/php/issues/1500
 RUN set -xe && \
             apk add --no-cache \
                 gmp \
