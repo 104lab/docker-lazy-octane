@@ -2,11 +2,15 @@
 VERSION := latest
 SHELL := bash
 
-.PHONY: all shell run 8.0 8.1
+.PHONY: all shell run 8.0 8.1 8.2 8.3
 
 # ------------------------------------------------------------------------------
 
-all: 8.2 8.1 8.0
+all: 8.3 8.2 8.1 8.0
+
+8.3:
+	docker build --progress=plain -t=lazy-octane:8.3 8.3
+	docker build --progress=plain -t=lazy-octane:8.3-alpine 8.3/alpine
 
 8.2:
 	docker build --progress=plain -t=lazy-octane:8.2 8.2
