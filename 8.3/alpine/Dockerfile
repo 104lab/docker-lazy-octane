@@ -1,4 +1,4 @@
-FROM ghcr.io/104lab/octane:8.2-alpine
+FROM ghcr.io/104lab/octane:8.3-alpine
 
 LABEL org.opencontainers.image.source="https://github.com/104lab/docker-octane" \
     repository="https://github.com/104lab/docker-octane"
@@ -9,6 +9,9 @@ ENV BUILD_DEPS \
         libxml2-dev \
         linux-headers
 
+# Socket issue
+# https://github.com/php/php-src/issues/8681
+# https://github.com/docker-library/php/issues/1500
 RUN set -xe && \
             apk add --no-cache \
                 gmp \
@@ -25,8 +28,8 @@ RUN set -xe && \
                 make \
         && \
             pecl install \
-                mongodb-1.12.0 \
-                redis-5.3.6 \
+                mongodb-1.18.1 \
+                redis-5.3.7 \
         && \
             docker-php-ext-enable \
                 mongodb \
