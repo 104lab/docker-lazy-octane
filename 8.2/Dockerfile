@@ -21,6 +21,7 @@ RUN set -xe && \
                 gmp \
                 soap \
                 sockets \
+                bcmath \
         && \
             pecl install \
                 mongodb-1.12.0 \
