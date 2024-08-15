@@ -25,7 +25,7 @@ RUN set -xe && \
                 make \
         && \
             pecl install \
-                mongodb-1.12.0 \
+                mongodb-1.19.3 \
                 redis-5.3.6 \
         && \
             docker-php-ext-enable \
