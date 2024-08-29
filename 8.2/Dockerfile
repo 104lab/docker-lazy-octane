@@ -16,6 +16,7 @@ RUN set -xe && \
             apt-get update && \
             apt-get install --yes --no-install-recommends --no-install-suggests \
                 ${BUILD_DEPS} \
+            apt-get install -y zip \
         && \
             docker-php-ext-install \
                 gmp \
